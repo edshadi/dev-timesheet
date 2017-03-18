@@ -3,23 +3,26 @@ var path = require('path');
 var nodeModulesDir = path.join(__dirname, 'node_modules');
 var WebpackNotifierPlugin = require('webpack-notifier');
 
-require("babel-preset-es2015")
-require("babel-preset-react")
+require('babel-preset-es2015')
+require('babel-preset-react')
 
 var config = {
-  entry: {
-    app: './src/app.jsx'
-  },
+  entry: [
+    'webpack-dev-server/client?http://0.0.0.0:3000',
+    'webpack/hot/only-dev-server',
+    './src/app.jsx',
+  ],
   output: {
-    path: path.join(__dirname, 'dist'),
-    publicPath: '/js/',
-    filename: '[name].js',
+    filename: 'app.js',
+    path: path.resolve('./build'),
+    publicPath: '/build/',
   },
   resolve: {
-    extensions: ['', '.js', '.json', '.jsx']
+    extensions: ['', '.js', '.json', '.jsx'],
   },
   plugins: [
-    new WebpackNotifierPlugin()
+    new WebpackNotifierPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
   ],
   devtool: 'eval',
   module: {
@@ -27,14 +30,14 @@ var config = {
     loaders: [
       {
         test: /\.jsx$|\.js$/,
-        loader: 'babel',
-        exclude: [nodeModulesDir]
+        loaders: ['react-hot', 'babel'],
+        exclude: [nodeModulesDir],
       },
-      { test: /\.css$/, loader: "style-loader!css-loader" },
-      { test: /\.png$/, loader: "url-loader?limit=100000" },
-      { test: /\.jpg$/, loader: "file-loader" }
-    ]
-  }
+      { test: /\.css$/, loader: 'style-loader!css-loader' },
+      { test: /\.png$/, loader: 'url-loader?limit=100000' },
+      { test: /\.jpg$/, loader: 'file-loader' },
+    ],
+  },
 };
 
 module.exports = config;
