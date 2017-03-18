@@ -10,7 +10,7 @@ var config = {
   entry: [
     'webpack-dev-server/client?http://0.0.0.0:3000',
     'webpack/hot/only-dev-server',
-    './src/app.jsx',
+    './src/components/app.jsx',
   ],
   output: {
     filename: 'app.js',
