@@ -52,6 +52,7 @@
     "react-addons-shallow-compare": ">=0.14",
     "react-dates": "^8.2.1",
     "react-dom": ">=0.14",
+    "react-loader": "^2.4.0",
     "react-select": "^1.0.0-rc.3"
   }
 }
