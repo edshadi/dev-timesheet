@@ -27,6 +27,9 @@ e.g. https://timesheet-staging-aurity.herokuapp.com/api/training/weeks/10/2017/3
 **approve/ reject chosen week**
 *PUT:* https://timesheet-staging-aurity.herokuapp.com/api/training/weeks/week_id/users/approved_id
 
+## Flux 
+While I built small things with Redux, I am more familiar with Alt as a Flux framework. So for the sake of time, I used it in this project. Replacing it with Redux should be simple enough.
+
 ## Install
 ```
 npm install or yarn install
