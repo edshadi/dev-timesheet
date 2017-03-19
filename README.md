@@ -11,7 +11,7 @@ Take a look on example screenshot on the bottom it should clear the task. But fe
 https://timesheet-staging-aurity.herokuapp.com/api/users
 
 **Monthly View / User:**
-https://timesheet-staging-aurity.herokuapp.com/api/users
+https://timesheet-staging-aurity.herokuapp.com/api/training/weeks/month_number/year/user_id
 e.g. https://timesheet-staging-aurity.herokuapp.com/api/training/weeks/10/2017/3
 
 *Some info about data structure:*
