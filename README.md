@@ -36,3 +36,9 @@ npm install or yarn install
 ```
 npm start
 ```
+
+## Test
+*Please notes: For the sake of simplicity, there's only one component test as an example. More tests need to be written if this was a production app.*
+```
+npm test
+```
