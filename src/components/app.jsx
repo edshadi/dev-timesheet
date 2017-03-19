@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import Timesheet from './timesheet';
+import TimesheetContainer from './timesheet-container';
 
 function App() {
   return (
     <div>
       <h1>Aurity Dev Client Timesheet</h1>
-      <Timesheet />
+      <TimesheetContainer />
     </div>
   );
 }

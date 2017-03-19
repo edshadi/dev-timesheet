@@ -3,69 +3,73 @@ import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
-import UserActions from '../actions/user-actions';
-import UserStore from '../stores/user-store';
+import Week from './week';
 
 export default class Timesheet extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = UserStore.getState();
-    this.handleChange = this.handleChange.bind(this);
-    this.selectUser = this.selectUser.bind(this);
-  }
-
-  componentDidMount() {
-    UserStore.listen(this.handleChange);
-    UserActions.allUsers();
-  }
-
-  componentWillUnmount() {
-    UserStore.unlisten(this.handleChange);
-  }
-
-  handleChange() {
-    this.setState(UserStore.getState());
-  }
-
   userSelectOptions() {
-    return this.state.users.map(({ id, username }) => (
+    return this.props.users.map(({ id, username }) => (
       { value: id, label: username }
     ));
   }
 
-  selectUser(selectedUserId) {
-    this.setState({ selectedUserId });
-  }
-
-  submit(status) {
-    console.log(Object.assign({ status }, this.state));
+  renderDatePicker() {
+    let select;
+    if (this.props.selectedUserId) {
+      select = (
+        <SingleDatePicker
+          id="dev_time"
+          date={this.props.selectedDate}
+          numberOfMonths={1}
+          focused={this.props.focused}
+          onDateChange={this.props.getMonthlyData}
+          onFocusChange={this.props.onDateFocus}
+        />
+      );
+    }
+    return select;
   }
 
   render() {
+    const disableSubmit = Object.keys(this.props.weekData).length === 0;
     return (
       <div>
+        <h3>1. Select a User</h3>
         <Select
           name="form-field-name"
-          value={this.state.selectedUserId}
+          value={this.props.selectedUserId}
           options={this.userSelectOptions()}
-          onChange={this.selectUser}
+          onChange={this.props.selectUser}
         />
-        <SingleDatePicker
-          id="date_input"
-          date={this.state.date}
-          numberOfMonths={1}
-          focused={this.state.focused}
-          onDateChange={(date) => { this.setState({ date }); }}
-          onFocusChange={({ focused }) => { this.setState({ focused }); }}
-        />
-
-        <input type="time" onChange={({ target }) => { this.setState({ time: target.value }); }} />
-        <button onClick={() => this.submit('approve')}>Approve</button>
-        <button onClick={() => this.submit('reject')}>Reject</button>
+        {this.renderDatePicker()}
+        <Week {...this.props.weekData} />
+        <button
+          onClick={() => this.props.submit('approved')}
+          disabled={disableSubmit}
+        >
+          Approve
+        </button>
+        <button
+          onClick={() => this.props.submit('rejected')}
+          disabled={disableSubmit}
+        >
+          Reject
+        </button>
       </div>
     );
   }
 }
 
 Timesheet.propTypes = {
+  users: PropTypes.array,
+  errors: PropTypes.array,
+  date: PropTypes.object,
+  focused: PropTypes.bool,
+  selectedUserId: PropTypes.number,
+  selectedDate: PropTypes.object,
+  monthlyData: PropTypes.object,
+  weekData: PropTypes.object,
+  getMonthlyData: PropTypes.func.isRequired,
+  onDateFocus: PropTypes.func.isRequired,
+  selectUser: PropTypes.func.isRequired,
+  submit: PropTypes.func.isRequired,
 };
