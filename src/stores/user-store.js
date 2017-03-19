@@ -40,7 +40,7 @@ class UserStore {
   }
 
   onSetSelectedUser(selectedUserId) {
-    this.setState({ selectedUserId, selectedDate: null });
+    this.setState({ selectedUserId, selectedDate: null, monthlyData: {}, weekData: {} });
   }
 
   extractWeekData(selectedDate) {
